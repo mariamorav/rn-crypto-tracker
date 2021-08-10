@@ -10,18 +10,21 @@ import {
 import Http from '../../libs/http';
 
 import CoinsItem from './CoinsItem';
+import CoinSearch from './CoinSearch';
 import Colors from 'cryptoTracker/src/res/colors';
 
 const CoinsScreen = (props) => {
 
     const [coins, setCoins] = useState({});
+    const [allCoins, setAllCoins] = useState({});
     const [loading, setLoading] = useState(false);
 
-    const getData = async () => {
+    const getCoins = async () => {
         try {
             setLoading(true);
             let res = await Http.instance.get('https://api.coinlore.net/api/tickers/');
             setCoins(res.data);
+            setAllCoins(res.data);
             //console.log(res);
             setLoading(false);
         } catch (e) {
@@ -33,12 +36,22 @@ const CoinsScreen = (props) => {
         props.navigation.navigate('CoinDetail', {coin});
     }
 
+    const handleSearch = (query) => {
+        const coinsFiltered = allCoins.filter((coin) => {
+            return coin.name.toLowerCase().includes(query.toLowerCase()) || 
+                coin.symbol.toLowerCase().includes(query.toLowerCase());
+        })
+
+        setCoins(coinsFiltered);
+    }
+
     useEffect(() => {
-        getData();
+        getCoins();
     }, []);
 
     return (
         <View style={styles.container}>
+            <CoinSearch onChange={handleSearch} />
 
             {loading ? 
                 <ActivityIndicator 

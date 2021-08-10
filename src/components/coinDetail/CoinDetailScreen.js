@@ -98,7 +98,7 @@ const CoinDetailScreen = (props) => {
                 style={styles.marketsList}
                 horizontal={true}
                 data={markets}
-                /* keyExtractor={({item}) => item} */
+                keyExtractor={(item) => item.id}
                 renderItem={({item}) => <CoinMarketItem item={item}/>}
             />
         </View>
