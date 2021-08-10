@@ -3,13 +3,24 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import CoinsScreen from './CoinsScreen';
 import CoinDetailScreen from './CoinDetailScreen';
+import Colors from 'cryptoTracker/src/res/colors';
 
 const Stack = createStackNavigator();
 
 const CoinsStack = () => {
 
     return (
-        <Stack.Navigator>
+        <Stack.Navigator
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: Colors.blackPearl,
+                    shadowOpacity: 0,
+                    shadowColor: Colors.blackPearl
+                    
+                },
+                headerTintColor: Colors.white
+            }}
+        >
 
             <Stack.Screen 
                 name="Coins" 
