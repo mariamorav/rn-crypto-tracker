@@ -29,9 +29,8 @@ const CoinsScreen = (props) => {
         }
     }
 
-    const handlePress = () => {
-        console.log("go to detail", props)
-        props.navigation.navigate('CoinDetail')
+    const handlePress = (coin) => {
+        props.navigation.navigate('CoinDetail', {coin});
     }
 
     useEffect(() => {
@@ -47,11 +46,17 @@ const CoinsScreen = (props) => {
                     size="large"
                     style={styles.loading}
                 />
-                : null    
+                : null
             }
             <FlatList 
                 data={coins}
-                renderItem={({item}) => <CoinsItem item={item} />}
+                initialNumToRender={30}
+                renderItem={({item}) => 
+                    <CoinsItem 
+                        item={item} 
+                        onPress={() => handlePress(item)}
+                    />
+                }
             />
         </View>
     );
